@@ -203,11 +203,17 @@ class LinearAlgebra:
         else:
             self.text.insert(END, "La matrice inserita non è quadrata!")
     
+    def _prettyMatrix(self, M):
+        for i in range(len(M)):
+            for j in range(len(M[i])):
+                M[i][j] = nsimplify(M[i][j], rational=True)
+        return M
+
     def getKerIm(self):
         self.text.delete(1.0, END)
         self.makeMatrix()
         m = Matrix(self.matrix)
-        self.text.insert(END, f"ker(f) = Span\n{pretty(nsimplify(m.nullspace(), rational=True))}\n\nIm(f) = Span\n{pretty(nsimplify(m.columnspace(), rational=True))}")
+        self.text.insert(END, f"ker(f) = Span\n{pretty(self._prettyMatrix(m.nullspace()))}\n\nIm(f) = Span\n{pretty(self._prettyMatrix(m.columnspace()))}")
 
     def getDiagonal(self):
         self.text.delete(1.0, END)
