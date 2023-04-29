@@ -1,7 +1,6 @@
 from tkinter import *
 from sympy import *
 
-
 class LinearAndNonLinearSystem:
     def __init__(self, root):
         self.root = root
@@ -17,7 +16,7 @@ class LinearAndNonLinearSystem:
 
         self.n_equations_entry = Entry(self.up_frame, width=2, font=("Cascadia Code", 15))
         self.n_equations_entry.grid(row=0, column=1)
-        
+
         self.n_variables_label = Label(self.up_frame, text="Incognite", font=("Cascadia Code", 15))
         self.n_variables_label.grid(row=0, column=2)
 
@@ -71,7 +70,7 @@ class LinearAndNonLinearSystem:
             borderwidth=0
         )
         self.text.pack(expand=True, fill=BOTH)
-    
+
     def deleteEntries(self):
         for widgets in self.equations_frame.winfo_children():
             widgets.destroy()
@@ -84,7 +83,7 @@ class LinearAndNonLinearSystem:
             self.n_variables = int(self.n_variables_entry.get())
 
             self.deleteEntries()
-        
+
             self.list_obj_components = []
             if self.n_equations > 0 and self.n_variables > 0:
                 for i in range(0, self.n_equations):
@@ -97,13 +96,13 @@ class LinearAndNonLinearSystem:
                 self.text.insert(END, "A chicco te devi da na svegliata!")
         else:
             self.text.insert(END, "A chicco te devi da na svegliata!")
-    
+
     def clearEntries(self):
         self.n_equations_entry.delete(0, END)
         self.n_variables_entry.delete(0, END)
         self.text.delete(1.0, END)
         self.deleteEntries()
-    
+
     def solveSystem(self):
         self.text.delete(1.0, END)
 
@@ -118,7 +117,6 @@ class LinearAndNonLinearSystem:
             v.append(variables[i])
 
         self.text.insert(END, f"Soluzione generale del sistema:\n\n{pretty(nsimplify(linsolve(system, v), rational=True))}")
-
 
 if __name__ == '__main__':
     root = Tk()

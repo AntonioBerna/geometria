@@ -2,7 +2,6 @@ from tkinter import *
 import numpy as np
 from sympy import *
 
-
 class LinearAlgebra:
     def __init__(self, root):
         self.root = root
@@ -18,7 +17,7 @@ class LinearAlgebra:
 
         self.rows_entry = Entry(self.up_frame, width=5, font=("Cascadia Code", 15))
         self.rows_entry.grid(row=0, column=1)
-        
+
         self.cols_label = Label(self.up_frame, text="Colonne", font=("Cascadia Code", 15))
         self.cols_label.grid(row=0, column=2)
 
@@ -120,11 +119,11 @@ class LinearAlgebra:
             borderwidth=0
         )
         self.text.pack(expand=True, fill=BOTH)
-    
+
     def deleteEntries(self):
         for widgets in self.matrix_frame.winfo_children():
             widgets.destroy()
-    
+
     def createEntries(self):
         self.text.delete(1.0, END)
 
@@ -133,7 +132,7 @@ class LinearAlgebra:
             self.cols = int(self.cols_entry.get())
 
             self.deleteEntries()
-        
+
             self.list_obj_components = []
             if self.rows > 0 and self.cols > 0:
                 for i in range(0, self.rows):
@@ -145,7 +144,7 @@ class LinearAlgebra:
                 self.text.insert(END, "A chicco te devi da na svegliata!")
         else:
             self.text.insert(END, "A chicco te devi da na svegliata!")
-    
+
     def makeMatrix(self):
         k = symbols("k")
         matrix_components = []
@@ -154,16 +153,16 @@ class LinearAlgebra:
                 matrix_components.append(obj.get())
             else:
                 matrix_components.append(float(obj.get()))
-        
+
         array = np.array(matrix_components)
         self.matrix = np.reshape(array, (self.rows, self.cols))
-    
+
     def clearEntries(self):
         self.rows_entry.delete(0, END)
         self.cols_entry.delete(0, END)
         self.text.delete(1.0, END)
         self.deleteEntries()
-    
+
     def getDetMatrix(self):
         self.text.delete(1.0, END)
         self.makeMatrix()
@@ -172,7 +171,7 @@ class LinearAlgebra:
             self.text.insert(END, f"det(M) = {round(float(m.det()), 2)}")
         else:
             self.text.insert(END, "La matrice inserita non è quadrata!")
-    
+
     def getRankMatrix(self):
         self.text.delete(1.0, END)
         self.makeMatrix()
@@ -190,7 +189,7 @@ class LinearAlgebra:
                 self.text.insert(END, f"Dato che det(M) = {round(float(m.det()), 2)}, la matrice non è invertibile!")
         else:
             self.text.insert(END, "La matrice inserita non è quadrata!")
-    
+
     def getJordanMatrix(self):
         self.text.delete(1.0, END)
         if self.rows == self.cols:
@@ -202,7 +201,7 @@ class LinearAlgebra:
             self.text.insert(END, f"J =\n{pretty(nsimplify(J, rational=True))}\n\nP =\n{pretty(nsimplify(P, rational=True))}\n\ninv(P) =\n{pretty(nsimplify(P.inv(), rational=True))}\n\ne^Jt = \n{pretty(nsimplify(Jt.exp(), rational=True))}\n\nP * e^Jt * inv(P) = \n{pretty(nsimplify(P * Jt.exp() * P.inv(), rational=True))}")
         else:
             self.text.insert(END, "La matrice inserita non è quadrata!")
-    
+
     def _prettyMatrix(self, M):
         for i in range(len(M)):
             for j in range(len(M[i])):
@@ -225,13 +224,12 @@ class LinearAlgebra:
             self.text.insert(END, f"p(t) = \n{pretty(factor(nsimplify(m.charpoly(t).as_expr(), rational=True)))}\n\nP =\n{pretty(nsimplify(P, rational=True))}\n\nD =\n{pretty(nsimplify(J, rational=True))}")
         else:
             self.text.insert(END, "La matrice inserita non è quadrata!")
-    
+
     def getTranspose(self):
         self.text.delete(1.0, END)
         self.makeMatrix()
         m = Matrix(self.matrix)
         self.text.insert(END, f"M^T = \n{pretty(nsimplify(m.T, rational=True))}")
-
 
 if __name__ == '__main__':
     root = Tk()
